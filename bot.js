@@ -1,17 +1,16 @@
 var Botkit = require('botkit');
-var controller = Botkit.slackbot();
-var bot = controller.spawn({
-  token: 'xoxb-20033792914-3LxaaHa2D8pKLtuM3dQ8OgfN'
-})
-bot.startRTM(function(err,bot,payload) {
-  if (err) {
-    throw new Error('Could not connect to Slack');
-  }
-});
-controller.hears(["keyword","^pattern$"],["direct_message","direct_mention","mention","ambient"],function(bot,message) {
-  // do something to respond to message
-  // all of the fields available in a normal Slack message object are available
-  // https://api.slack.com/events/message
-  bot.reply(message,'You used a keyword!');
+var controller = Botkit.slackbot({
+  debug: false
+  //include "log: false" to disable logging
+  //or a "logLevel" integer from 0 to 7 to adjust logging verbosity
 });
 
+// connect the bot to a stream of messages
+controller.spawn({
+  token: 'xoxb-20033792914-3LxaaHa2D8pKLtuM3dQ8OgfN',
+}).startRTM()
+
+// give the bot something to listen for.
+controller.hears('hello',['direct_message','direct_mention','mention'],function(bot,message) {
+  bot.reply(message,'Hello yourself.');
+});
