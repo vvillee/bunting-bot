@@ -17,7 +17,7 @@ controller.spawn({
 // give the bot something to listen for.
 controller.hears(
   'keltasirkku',
-  ['direct_message','direct_mention','mention','ambient'],
+  ['direct_message','direct_mention','mention'],
   function (bot, message) {
     var reply = function (replyMessage) {
       bot.reply(message, replyMessage);
