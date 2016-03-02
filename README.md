@@ -19,3 +19,5 @@ Deploy as Node.js application.
 Support for Mustajuuri
 
 Decide lunch if not asked before 10:45
+
+Show brief list of todays menu at 10am
