@@ -17,10 +17,4 @@ Deploy as Node.js application.
 
 ## TODO
 
-Support for Mustajuuri
-
-Decide lunch place if not asked before 10:45
-
-Show brief list of todays menus at 10am
-
-Decide lunch place by the thumbs up reactions to list of menus
+Check issues!
