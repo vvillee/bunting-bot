@@ -53,6 +53,14 @@ controller.hears(
   }
 );
 
+controller.hears(
+  'vaunu',
+  ['direct_message','direct_mention','mention'],
+  function(bot, message) {
+    bot.reply(message, 'EI');
+  }
+);
+
 // to avoid heroku error, listen port process.env.PORT
 var http = require('http');
 http.createServer(function (req, res) {
