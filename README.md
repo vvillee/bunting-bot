@@ -12,6 +12,7 @@ Deploy as Node.js application.
 ## Commands
 
 **keltasirkku**: Shows todays menu for Keltasirkku  :o
+
 **vaunu**: Shows todays menu for Vaunu 
 
 ## TODO
