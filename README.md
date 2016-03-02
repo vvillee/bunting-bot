@@ -18,6 +18,8 @@ Deploy as Node.js application.
 
 Support for Mustajuuri
 
-Decide lunch if not asked before 10:45
+Decide lunch place if not asked before 10:45
 
-Show brief list of todays menu at 10am
+Show brief list of todays menus at 10am
+
+Decide lunch place by the thumbs up reactions to list of menus
