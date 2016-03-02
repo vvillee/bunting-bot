@@ -1,5 +1,7 @@
 # Bunting Bot - A Bot for Slack
 
+![alt tag](https://travis-ci.org/vvillee/bunting-bot.svg?branch=master)
+
 ## How to run?
 
 SLACK_TOKEN='your_slack_token_here' node bot.js
