@@ -11,4 +11,11 @@ Deploy as Node.js application.
 
 ## Commands
 
-**keltasirkku**: Shows todays menu for Keltasirkku Restaurant :o
+**keltasirkku**: Shows todays menu for Keltasirkku  :o
+**vaunu**: Shows todays menu for Vaunu 
+
+## TODO
+
+Support for Mustajuuri
+
+Decide lunch if not asked before 10:45
