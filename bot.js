@@ -56,11 +56,11 @@ controller.hears(
     };
 
     var handleRestaurantMenuData = function (data) {
-      reply(replyMessageFromMenu(data, restaurantId));
+      reply(replyMessageFromMenu(data));
     };
 
     var handleRestaurantData = function (data) {
-      var restaurantMenuUrl = parseRestaurantMenuUrl(data, restaurantId);
+      var restaurantMenuUrl = parseRestaurantMenuUrl(data);
       fetchJson(restaurantMenuUrl, handleRestaurantMenuData);
     };
 
