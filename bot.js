@@ -3,6 +3,14 @@ if (!process.env.SLACK_TOKEN) {
   process.exit(1);
 }
 
+var fetchJson = function (url, callback) {
+  http.get(url, function (res) {
+    var body = '';
+    res.on('data', function (chunk) { body += chunk; });
+    res.on('end', function () { callback(JSON.parse(body)) });
+  }).on('error', function (e) { console.log("Got an error: ", e) });
+};
+
 var Botkit = require('botkit');
 var http = require('http');
 var controller = Botkit.slackbot({
@@ -12,44 +20,47 @@ var controller = Botkit.slackbot({
 // connect the bot to a stream of messages
 controller.spawn({
   token: process.env.SLACK_TOKEN,
-}).startRTM()
+}).startRTM();
 
 // give the bot something to listen for.
 controller.hears(
   'keltasirkku',
   ['direct_message','direct_mention','mention'],
   function (bot, message) {
+    var restaurantDataUrl = 'http://ruokalistat.leijonacatering.fi/AromiStorage/blob/main/AromiMenusJsonData';
+    var restaurantId = '4fd75ded-e510-e511-892b-78e3b50298fc';
+
     var reply = function (replyMessage) {
       bot.reply(message, replyMessage);
     };
-    var fetchMenu = function () {
-      var url = 'http://ruokalistat.leijonacatering.fi/AromiStorage/blob/menu/4e605ac2-acdb-e511-8349-78e3b50298fc';
 
-      http.get(url, function (res) {
-        var body = '';
-        
-        res.on('data', function (chunk) {
-          body += chunk;
-        });
-        
-        res.on('end', function () {
-          var response = JSON.parse(body);
-          var today = new Date();
-          var replyMessage = '';
-          try {
-            response.Days[today.getDay() - 1].Meals.forEach(function(meal){
-              console.log(meal.Name);
-              replyMessage = replyMessage + meal.MealType + ': ' + meal.Name + '\n';
-            });
-          } catch (e) {
-            replyMessage = 'Ei ruokaa tälle päivälle :(';
-          }
-          reply(replyMessage);
-        });
-      
-      }).on('error', function (e) { console.log("Got an error: ", e) });
+    var parseRestaurantMenuUrl = function (data, restaurantId) {
+      return 'http:' + data.Restaurants[7].JMenus[0].LinkUrl;
     };
-    fetchMenu();
+
+    var replyMessageFromMenu = function (data) {
+      var today = new Date();
+      var replyMessage = '';
+      try {
+        data.Days[today.getDay() - 1].Meals.forEach(function(meal){
+          replyMessage = replyMessage + meal.MealType + ': ' + meal.Name + '\n';
+        });
+        return replyMessage;
+      } catch (e) {
+        return 'Ei ruokaa tälle päivälle :(';
+      }
+    };
+
+    var handleRestaurantMenuData = function (data) {
+      reply(replyMessageFromMenu(data, restaurantId));
+    };
+
+    var handleRestaurantData = function (data) {
+      var restaurantMenuUrl = parseRestaurantMenuUrl(data, restaurantId);
+      fetchJson(restaurantMenuUrl, handleRestaurantMenuData);
+    };
+
+    fetchJson(restaurantDataUrl, handleRestaurantData);
   }
 );
 
