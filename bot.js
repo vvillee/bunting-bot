@@ -34,8 +34,12 @@ controller.hears(
       bot.reply(message, replyMessage);
     };
 
-    var parseRestaurantMenuUrl = function (data, restaurantId) {
-      return 'http:' + data.Restaurants[7].JMenus[0].LinkUrl;
+    var restaurantFilter = function (restaurant) {
+      return restaurant.RestaurantId === restaurantId;
+    };
+
+    var parseRestaurantMenuUrl = function (data) {
+      return 'http:' + data.Restaurants.filter(restaurantFilter)[0].JMenus[0].LinkUrl;
     };
 
     var replyMessageFromMenu = function (data) {
