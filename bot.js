@@ -16,6 +16,7 @@ var http = require('http');
 var controller = Botkit.slackbot({
   debug: false
 });
+var _ = require('underscore');
 
 // connect the bot to a stream of messages
 controller.spawn({
