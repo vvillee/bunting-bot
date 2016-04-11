@@ -12,7 +12,6 @@ var fetchJson = function (url, callback) {
 };
 
 var Botkit = require('botkit');
-var http = require('http');
 var controller = Botkit.slackbot({
   debug: false
 });
@@ -112,9 +111,3 @@ controller.hears(
   }
 );
 
-// to avoid heroku error, listen port process.env.PORT
-var http = require('http');
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('it is running\n');
-}).listen(process.env.PORT || 5000);
