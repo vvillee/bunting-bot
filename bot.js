@@ -96,8 +96,16 @@ controller.hears(
       handleSelectedMember(memberId);
     };
 
+    var handleChannelResponse = function (err, response) {
+      if (err) {
+	console.log(err)
+      } else {
+	selectMember(response.channel.members)
+      }
+    };
+
     var handleChannelData = function (channelId) {
-      bot.api.channels.info({'channel': channelId}, function (err, response) { selectMember(response.channel.members) });
+      bot.api.channels.info({'channel': channelId}, handleChannelResponse);
     };
 
     handleChannelData(message.channel);
