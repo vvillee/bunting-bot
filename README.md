@@ -11,6 +11,10 @@ SLACK_TOKEN='your_slack_token_here' node bot.js
 
 **vaunu**: Show menu for Vaunu
 
+## Acts on
+
+**joku**: Selects randomly someone from the channel and mentions her
+
 ## TODO
 
 Check issues!

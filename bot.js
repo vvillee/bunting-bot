@@ -77,6 +77,33 @@ controller.hears(
   }
 );
 
+controller.hears(
+  'joku',
+  ['ambient'],
+  function(bot, message) {
+
+    var handleSelectedMember = function (memberId) {
+      if (memberId !== undefined){
+        bot.api.users.info({'user': memberId}, function (err, response) { bot.reply(message, "Joku eli @"+response.user.name) })
+      } else {
+        bot.reply(message, "Joku eli ei kukaan :(");
+      }
+    };
+
+    var selectMember = function (members) {
+      var membersWithoutCaller = _.filter(members, function (memberId) { return (memberId !== message.user && memberId !== bot.identity.id)});
+      var memberId = _.sample(membersWithoutCaller);
+      handleSelectedMember(memberId);
+    };
+
+    var handleChannelData = function (channelId) {
+      bot.api.channels.info({'channel': channelId}, function (err, response) { selectMember(response.channel.members) });
+    };
+
+    handleChannelData(message.channel);
+  }
+);
+
 // to avoid heroku error, listen port process.env.PORT
 var http = require('http');
 http.createServer(function (req, res) {
