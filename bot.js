@@ -3,6 +3,13 @@ if (!process.env.SLACK_TOKEN) {
   process.exit(1);
 }
 
+var Botkit = require('botkit');
+var http = require('http');
+var controller = Botkit.slackbot({
+  debug: false
+});
+var _ = require('underscore');
+
 var fetchJson = function (url, callback) {
   http.get(url, function (res) {
     var body = '';
