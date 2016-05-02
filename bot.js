@@ -70,6 +70,35 @@ controller.hears(
 );
 
 controller.hears(
+  'mustajuuri',
+  ['direct_message','direct_mention','mention'],
+  function(bot, message) {
+
+    var today = new Date();
+
+    var dateRepresentationUS = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    var dateRepresentationFI = today.getDate() + "." + (today.getMonth() + 1) + "." + today.getFullYear();
+
+    var restaurantDataUrl = 'http://www.amica.fi/api/restaurant/menu/week?language=fi&restaurantPageId=7633&weekDate=' + dateRepresentationUS;
+
+    var generateReplyMessageFromLunches = function (lunches) {
+      var replyMessage = '';
+      _.each(lunches, function (lunch) { replyMessage = replyMessage + lunch + '\n'})
+      return replyMessage;
+    }
+
+    var handleRestaurantData = function (data) {
+      var todayMenus = _.find(data.LunchMenus, function(day) { return day.Date === dateRepresentationFI });
+      var lunchMeals = _.find(todayMenus.SetMenus, function(menu) { return menu.Name === 'Lounasbuffee' });
+      var lunches = _.map(lunchMeals.Meals, function(lunch) { return lunch.Name });
+      reply(generateReplyMessageFromLunches(lunches), bot, message);
+    };
+
+    fetchJson(restaurantDataUrl, handleRestaurantData);
+  }
+);
+
+controller.hears(
   'vaunu',
   ['direct_message','direct_mention','mention'],
   function(bot, message) {
@@ -111,4 +140,3 @@ controller.hears(
     handleChannelData(message.channel);
   }
 );
-

@@ -9,6 +9,8 @@ SLACK_TOKEN='your_slack_token_here' node bot.js
 
 **keltasirkku**: Show menu for Keltasirkku
 
+**mustajuuri**: Show menu for Mustajuuri
+
 **vaunu**: Show menu for Vaunu
 
 ## Acts on
