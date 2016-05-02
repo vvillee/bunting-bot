@@ -18,11 +18,9 @@ var fetchJson = function (url, callback) {
   }).on('error', function (e) { console.log("Got an error: ", e) });
 };
 
-var Botkit = require('botkit');
-var controller = Botkit.slackbot({
-  debug: false
-});
-var _ = require('underscore');
+var reply = function (replyMessage, bot, message) {
+  bot.reply(message, replyMessage);
+};
 
 // connect the bot to a stream of messages
 controller.spawn({
@@ -36,10 +34,6 @@ controller.hears(
   function (bot, message) {
     var restaurantDataUrl = 'http://ruokalistat.leijonacatering.fi/AromiStorage/blob/main/AromiMenusJsonData';
     var restaurantId = '4fd75ded-e510-e511-892b-78e3b50298fc';
-
-    var reply = function (replyMessage) {
-      bot.reply(message, replyMessage);
-    };
 
     var restaurantFilter = function (restaurant) {
       return restaurant.RestaurantId === restaurantId;
@@ -63,7 +57,7 @@ controller.hears(
     };
 
     var handleRestaurantMenuData = function (data) {
-      reply(replyMessageFromMenu(data));
+      reply(replyMessageFromMenu(data), bot, message);
     };
 
     var handleRestaurantData = function (data) {
