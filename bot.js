@@ -3,6 +3,7 @@ if (!process.env.SLACK_TOKEN) {
   process.exit(1);
 }
 
+var akava = require("./akava.js");
 var Botkit = require('botkit');
 var http = require('http');
 var controller = Botkit.slackbot({
@@ -140,3 +141,13 @@ controller.hears(
     handleChannelData(message.channel);
   }
 );
+
+controller.hears(
+  'akava',
+  ['direct_message','direct_mention','mention'],
+  function(bot, message) {
+
+    bot.reply(message, parsedResult);
+  }
+);
+

@@ -11,6 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "botkit": "0.0.5",
-    "underscore": "1.8.3"
+    "underscore": "1.8.3",
+    "mississippi": "~1.2.0",
+    "cheerio": "~0.22.0"
+  },
+  "devDependencies": {
+    "nock": "~9.0.2"
   }
 }
