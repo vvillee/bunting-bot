@@ -29,7 +29,6 @@ akava.parseRaw = function (callback) {
 	});
 };
 
-
 akava.monday = function (callback) {
   parseDay(callback, function (lunchContentTable) {
 		return lunchContentTable.find("table").first();
@@ -58,6 +57,19 @@ akava.friday = function (callback) {
 	parseDay(callback, function (lunchContentTable) {
 		return lunchContentTable.find("table").slice(4).first();
 	});
+};
+
+akava.saturday = function (callback) {
+	callback("no lunch for today. sorry");
+};
+
+akava.sunday = akava.saturday;
+
+akava.lunch = function (callback) {
+	var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+	var day = new Date().getDay();
+	var functionName = days[day].toLowerCase();
+	akava[functionName](callback);
 };
 
 for(f in akava) {

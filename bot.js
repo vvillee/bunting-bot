@@ -145,9 +145,10 @@ controller.hears(
 controller.hears(
   'akava',
   ['direct_message','direct_mention','mention'],
-  function(bot, message) {
-
-    bot.reply(message, parsedResult);
+  function (bot, message) {
+		akava.lunch(function (parsedResult) {
+			bot.reply(message, parsedResult);
+		});
   }
 );
 
