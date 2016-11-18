@@ -4,7 +4,7 @@
   "description": "Bot for slack",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Warning: no test specified\" && exit 0",
+    "test": "nodeunit test",
     "start": "node bot.js"
   },
   "author": "Ville Pulkkinen",
