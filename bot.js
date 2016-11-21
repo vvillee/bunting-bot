@@ -3,13 +3,17 @@ if (!process.env.SLACK_TOKEN) {
   process.exit(1);
 }
 
+_ = require('underscore');
+
 var akava = require("./akava.js");
+var Leijona = require("./leijona.js");
+var Amica = require("./amica.js");
+var Somebody = require("./somebody.js");
 var Botkit = require('botkit');
 var http = require('http');
 var controller = Botkit.slackbot({
   debug: false
 });
-var _ = require('underscore');
 
 var fetchJson = function (url, callback) {
   http.get(url, function (res) {
@@ -28,74 +32,28 @@ controller.spawn({
   token: process.env.SLACK_TOKEN,
 }).startRTM();
 
-// give the bot something to listen for.
+// give the bot something to listen for
 controller.hears(
   'keltasirkku',
   ['direct_message','direct_mention','mention'],
   function (bot, message) {
-    var restaurantDataUrl = 'http://ruokalistat.leijonacatering.fi/AromiStorage/blob/main/AromiMenusJsonData';
-    var restaurantId = '4fd75ded-e510-e511-892b-78e3b50298fc';
-
-    var restaurantFilter = function (restaurant) {
-      return restaurant.RestaurantId === restaurantId;
-    };
-
-    var parseRestaurantMenuUrl = function (data) {
-      return 'http:' + data.Restaurants.filter(restaurantFilter)[0].JMenus[0].LinkUrl;
-    };
-
-    var replyMessageFromMenu = function (data) {
-      var today = new Date();
-      var replyMessage = '';
-      try {
-        data.Days[today.getDay() - 1].Meals.forEach(function(meal){
-          replyMessage = replyMessage + meal.MealType + ': ' + meal.Name + '\n';
-        });
-        return replyMessage;
-      } catch (e) {
-        return 'Ei ruokaa tälle päivälle :(';
-      }
-    };
-
-    var handleRestaurantMenuData = function (data) {
-      reply(replyMessageFromMenu(data), bot, message);
-    };
-
-    var handleRestaurantData = function (data) {
-      var restaurantMenuUrl = parseRestaurantMenuUrl(data);
-      fetchJson(restaurantMenuUrl, handleRestaurantMenuData);
-    };
-
-    fetchJson(restaurantDataUrl, handleRestaurantData);
+    new Leijona('4fd75ded-e510-e511-892b-78e3b50298fc', fetchJson, reply, bot, message);
   }
 );
 
 controller.hears(
-  'mustajuuri',
+  'asemamies',
+  ['direct_message','direct_mention','mention'],
+  function (bot, message) {
+    new Leijona('b9ab95ae-4834-e611-87ed-78e3b50298fc', fetchJson, reply, bot, message);
+  }
+);
+
+controller.hears(
+  'viherlatva',
   ['direct_message','direct_mention','mention'],
   function(bot, message) {
-
-    var today = new Date();
-
-    var dateRepresentationUS = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-    var dateRepresentationFI = today.getDate() + "." + (today.getMonth() + 1) + "." + today.getFullYear();
-
-    var restaurantDataUrl = 'http://www.amica.fi/api/restaurant/menu/week?language=fi&restaurantPageId=7633&weekDate=' + dateRepresentationUS;
-
-    var generateReplyMessageFromLunches = function (lunches) {
-      var replyMessage = '';
-      _.each(lunches, function (lunch) { replyMessage = replyMessage + lunch + '\n'})
-      return replyMessage;
-    }
-
-    var handleRestaurantData = function (data) {
-      var todayMenus = _.find(data.LunchMenus, function(day) { return day.Date === dateRepresentationFI });
-      var lunchMeals = _.find(todayMenus.SetMenus, function(menu) { return menu.Name === 'Lounasbuffee' });
-      var lunches = _.map(lunchMeals.Meals, function(lunch) { return lunch.Name });
-      reply(generateReplyMessageFromLunches(lunches), bot, message);
-    };
-
-    fetchJson(restaurantDataUrl, handleRestaurantData);
+    new Amica('7303', fetchJson, reply, bot, message);
   }
 );
 
@@ -111,34 +69,7 @@ controller.hears(
   'joku',
   ['ambient'],
   function(bot, message) {
-
-    var handleSelectedMember = function (memberId) {
-      if (memberId !== undefined){
-        bot.api.users.info({'user': memberId}, function (err, response) { bot.reply(message, "Joku eli @"+response.user.name) })
-      } else {
-        bot.reply(message, "Joku eli ei kukaan :(");
-      }
-    };
-
-    var selectMember = function (members) {
-      var membersWithoutCaller = _.filter(members, function (memberId) { return (memberId !== message.user && memberId !== bot.identity.id)});
-      var memberId = _.sample(membersWithoutCaller);
-      handleSelectedMember(memberId);
-    };
-
-    var handleChannelResponse = function (err, response) {
-      if (err) {
-	console.log(err)
-      } else {
-	selectMember(response.channel.members)
-      }
-    };
-
-    var handleChannelData = function (channelId) {
-      bot.api.channels.info({'channel': channelId}, handleChannelResponse);
-    };
-
-    handleChannelData(message.channel);
+    new Somebody(reply, bot, message);
   }
 );
 
