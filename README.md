@@ -14,13 +14,17 @@ Deploy as Node.js application.
 
 **keltasirkku**: Show menu for Keltasirkku
 
-**mustajuuri**: Show menu for Mustajuuri
+**asemamies**: Show menu for Asemamies
+
+**viherlatva**: Show menu for Viherlatva
+
+**akava**: Show menu for Akavatalo
 
 **vaunu**: Show menu for Vaunu
 
 ## Acts on
 
-**joku**: Selects randomly someone from the channel and mentions her
+**joku**: Selects randomly someone from the channel and mentions her (works only in public channels)
 
 ## TODO
 
