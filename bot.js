@@ -77,9 +77,9 @@ controller.hears(
   'akava',
   ['direct_message','direct_mention','mention'],
   function (bot, message) {
-		akava.lunch(function (parsedResult) {
-			bot.reply(message, parsedResult);
-		});
+    akava.lunch(function (parsedResult) {
+      bot.reply(message, parsedResult);
+    });
   }
 );
 
