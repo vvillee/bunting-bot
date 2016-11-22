@@ -1,14 +1,6 @@
 var Amica = function(restaurantPageId, fetchJson, reply, bot, message) {
-  var restaurantPageId = restaurantPageId;
-  var fetchJson = fetchJson;
-  var reply = reply;
-  var bot = bot;
-  var message = message;
-
   var today = new Date();
-
   var dateRepresentationUS = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-
   var restaurantDataUrl = 'http://www.amica.fi/api/restaurant/menu/day?language=fi&restaurantPageId=' + restaurantPageId + '&date=' + dateRepresentationUS;
 
   var generateReplyMessageFromLunches = function (lunches) {

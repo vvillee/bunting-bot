@@ -1,10 +1,5 @@
 var Leijona = function(restaurantId, fetchJson, reply, bot, message) {
   this.restaurantDataUrl = 'http://ruokalistat.leijonacatering.fi/AromiStorage/blob/main/AromiMenusJsonData';
-  var restaurantId = restaurantId;
-  var fetchJson = fetchJson;
-  var reply = reply;
-  var bot = bot;
-  var message = message;
 
   var restaurantFilter = function (restaurant) {
     return restaurant.RestaurantId === restaurantId;

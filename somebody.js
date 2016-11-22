@@ -1,7 +1,4 @@
 var Somebody = function (reply, bot, message) {
-  var reply = reply;
-  var bot = bot;
-  var message = message;
   var handleSelectedMember = function (memberId) {
     if (memberId !== undefined){
       bot.api.users.info({'user': memberId}, function (err, response) { bot.reply(message, "Joku eli @"+response.user.name) });
