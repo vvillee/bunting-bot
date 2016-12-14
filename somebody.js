@@ -1,28 +1,52 @@
 var Somebody = function (reply, bot, message) {
+  var createReply = function (err, response) {
+    bot.reply(message, "Joku eli @"+response.user.name);
+  };
+
   var handleSelectedMember = function (memberId) {
     if (memberId !== undefined){
-      bot.api.users.info({'user': memberId}, function (err, response) { bot.reply(message, "Joku eli @"+response.user.name) });
+      bot.api.users.info({'user': memberId}, createReply);
     } else {
       bot.reply(message, "Joku eli ei kukaan :(");
     }
   };
 
-  var selectMember = function (members) {
-    var membersWithoutCaller = _.filter(members, function (memberId) { return (memberId !== message.user && memberId !== bot.identity.id)});
-    var memberId = _.sample(membersWithoutCaller);
-    handleSelectedMember(memberId);
+  var callerOrBotFilter = function (memberId) {
+    return (memberId !== message.user && memberId !== bot.identity.id);
   };
 
-  var handleChannelResponse = function (err, response) {
+  var filterMembers = function (members) {
+    return _.filter(members, callerOrBotFilter);
+  };
+
+  var selectRandomMember = function (members) {
+    return _.sample(filterMembers(members));
+  };
+
+  var handleChannelResponse = function (response) {
+    var memberId = null;
+    if (response.channel !== undefined) {
+      memberId = selectRandomMember(response.channel.members);
+    } else {
+      memberId = selectRandomMember(response.group.members);
+    }
+
+    if (memberId !== null) {
+      handleSelectedMember(memberId);
+    }
+  };
+
+  var handleChannelCallback = function (err, response) {
     if (err) {
       console.log(err);
     } else {
-      selectMember(response.channel.members);
+      handleChannelResponse(response);
     }
   };
 
   var handleChannelData = function (channelId) {
-    bot.api.channels.info({'channel': channelId}, handleChannelResponse);
+    bot.api.channels.info({'channel': channelId}, handleChannelCallback);
+    bot.api.groups.info({'channel': channelId}, handleChannelCallback);
   };
 
   handleChannelData(message.channel);
