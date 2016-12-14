@@ -24,7 +24,7 @@ Deploy as Node.js application.
 
 ## Acts on
 
-**joku**: Selects randomly someone from the channel and mentions her (works only in public channels)
+**joku**: Selects randomly someone from the channel and mentions her
 
 ## TODO
 
