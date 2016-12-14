@@ -10,8 +10,8 @@
   "author": "Ville Pulkkinen",
   "license": "ISC",
   "dependencies": {
-    "botkit": "0.0.5",
-    "underscore": "1.8.3",
+    "botkit": "~0.4.3",
+    "underscore": "~1.8.3",
     "mississippi": "~1.2.0",
     "cheerio": "~0.22.0"
   },
