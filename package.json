@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Bot for slack",
   "main": "bot.js",
+  "engines": {
+    "node": "6.1.0"
+  },
   "scripts": {
     "test": "nodeunit test",
     "start": "node bot.js"
