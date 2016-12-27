@@ -26,7 +26,7 @@ Somebody.prototype.handleChannelData = function (message) {
   };
 
   let selectRandomMember = function (members) {
-    return _.sample(filterMembers.bind(this, members));
+    return _.sample(filterMembers.call(this, members));
   };
 
   let handleChannelResponse = function (response) {
