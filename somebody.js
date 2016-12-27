@@ -1,55 +1,57 @@
-var Somebody = function (reply, bot, message) {
-  var createReply = function (err, response) {
-    bot.reply(message, "Joku eli @"+response.user.name);
+let Somebody = function (bot) {
+  this.bot = bot;
+};
+
+Somebody.prototype.handleChannelData = function (message) {
+  let channelId = message.channel;
+
+  let createReply = function (err, response) {
+    this.bot.reply(message, `Joku eli @${response.user.name}`);
   };
 
-  var handleSelectedMember = function (memberId) {
+  let handleSelectedMember = function (memberId) {
     if (memberId !== undefined){
-      bot.api.users.info({'user': memberId}, createReply);
+      this.bot.api.users.info({'user': memberId}, createReply.bind(this));
     } else {
-      bot.reply(message, "Joku eli ei kukaan :(");
+      this.bot.reply(message, "Joku eli ei kukaan :(");
     }
   };
 
-  var callerOrBotFilter = function (memberId) {
-    return (memberId !== message.user && memberId !== bot.identity.id);
+  let callerOrBotFilter = function (memberId) {
+    return (memberId !== message.user && memberId !== this.bot.identity.id);
   };
 
-  var filterMembers = function (members) {
-    return _.filter(members, callerOrBotFilter);
+  let filterMembers = function (members) {
+    return _.filter(members, callerOrBotFilter.bind(this));
   };
 
-  var selectRandomMember = function (members) {
-    return _.sample(filterMembers(members));
+  let selectRandomMember = function (members) {
+    return _.sample(filterMembers.bind(this, members));
   };
 
-  var handleChannelResponse = function (response) {
-    var memberId = null;
+  let handleChannelResponse = function (response) {
+    let memberId = null;
     if (response.channel !== undefined) {
-      memberId = selectRandomMember(response.channel.members);
+      memberId = selectRandomMember.call(this, response.channel.members);
     } else {
-      memberId = selectRandomMember(response.group.members);
+      memberId = selectRandomMember.call(this, response.group.members);
     }
 
     if (memberId !== null) {
-      handleSelectedMember(memberId);
+      handleSelectedMember.call(this, memberId);
     }
   };
 
-  var handleChannelCallback = function (err, response) {
+  let handleChannelCallback = function (err, response) {
     if (err) {
       console.log(err);
     } else {
-      handleChannelResponse(response);
+      handleChannelResponse.call(this, response);
     }
   };
 
-  var handleChannelData = function (channelId) {
-    bot.api.channels.info({'channel': channelId}, handleChannelCallback);
-    bot.api.groups.info({'channel': channelId}, handleChannelCallback);
-  };
-
-  handleChannelData(message.channel);
+  this.bot.api.channels.info({'channel': channelId}, handleChannelCallback.bind(this));
+  this.bot.api.groups.info({'channel': channelId}, handleChannelCallback.bind(this));
 };
 
 module.exports = Somebody;

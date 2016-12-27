@@ -69,7 +69,8 @@ controller.hears(
   'joku',
   ['ambient'],
   function(bot, message) {
-    new Somebody(reply, bot, message);
+    var somebody = new Somebody(bot);
+    somebody.handleChannelData(message);
   }
 );
 
