@@ -66,7 +66,7 @@ controller.hears(
 );
 
 controller.hears(
-  'joku',
+  '@joku',
   ['ambient'],
   function(bot, message) {
     var somebody = new Somebody(bot);
