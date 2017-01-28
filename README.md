@@ -1,5 +1,5 @@
 # Bunting Bot - A Bot for Slack
-[![alt tag](https://travis-ci.org/vvillee/bunting-bot.svg?branch=master)](https://travis-ci.org/vvillee/bunting-bot)
+[![alt tag](https://travis-ci.org/vvillee/bunting-bot.svg?branch=master)](https://travis-ci.org/vvillee/bunting-bot) ![David is watching for our dependencies](https://david-dm.org/vvillee/bunting-bot.svg)
 
 ## How to run?
 
