@@ -1,10 +1,9 @@
 const getJSON = require('./http-helpers.js').getJSON;
+const DateFormatter = require('./date-formatter.js');
 
 class Amica {
   constructor(restaurantPageId) {
-    const today = new Date();
-    const dateRepresentationUS = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-    const restaurantDataUrl = 'http://www.amica.fi/api/restaurant/menu/day?language=fi&restaurantPageId=' + restaurantPageId + '&date=' + dateRepresentationUS;
+    const restaurantDataUrl = 'http://www.amica.fi/api/restaurant/menu/day?language=fi&restaurantPageId=' + restaurantPageId + '&date=' + DateFormatter.representationUS(new Date());
 
     this.todaysMenu = getJSON(restaurantDataUrl).then((data) => {
       return this.handleRestaurantData(data);
