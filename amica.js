@@ -1,21 +1,27 @@
-var Amica = function(restaurantPageId, fetchJson, reply, bot, message) {
-  var today = new Date();
-  var dateRepresentationUS = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-  var restaurantDataUrl = 'http://www.amica.fi/api/restaurant/menu/day?language=fi&restaurantPageId=' + restaurantPageId + '&date=' + dateRepresentationUS;
+const getJSON = require('./http-helpers.js').getJSON;
 
-  var generateReplyMessageFromLunches = function (lunches) {
+class Amica {
+  constructor(restaurantPageId) {
+    const today = new Date();
+    const dateRepresentationUS = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    const restaurantDataUrl = 'http://www.amica.fi/api/restaurant/menu/day?language=fi&restaurantPageId=' + restaurantPageId + '&date=' + dateRepresentationUS;
+
+    this.todaysMenu = getJSON(restaurantDataUrl).then((data) => {
+      return this.handleRestaurantData(data);
+    });
+  }
+
+  generateReplyMessageFromLunches(lunches) {
     var replyMessage = '';
     _.each(lunches, function (lunch) { replyMessage = replyMessage + lunch + '\n'})
     return replyMessage;
   }
 
-  var handleRestaurantData = function (data) {
-    var lunchMeals = _.find(data.LunchMenu.SetMenus, function(menu) { return menu.Name === 'Buffetlounas' });
-    var lunches = _.map(lunchMeals.Meals, function(lunch) { return lunch.Name });
-    reply(generateReplyMessageFromLunches(lunches), bot, message);
-  };
-
-  fetchJson(restaurantDataUrl, handleRestaurantData);
+  handleRestaurantData(data) {
+    const lunchMeals = _.find(data.LunchMenu.SetMenus, function(menu) { return menu.Name === 'Buffetlounas' });
+    const lunches = _.map(lunchMeals.Meals, function(lunch) { return lunch.Name });
+    return this.generateReplyMessageFromLunches(lunches);
+  }
 };
 
 module.exports = Amica;

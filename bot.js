@@ -4,6 +4,8 @@ if (!process.env.SLACK_TOKEN) {
 }
 
 _ = require('underscore');
+var fetchJson = require('./http-helpers.js').fetchJson;
+var getJSON = require('./http-helpers.js').getJSON;
 
 var akava = require("./akava");
 var Leijona = require("./leijona");
@@ -14,14 +16,6 @@ var http = require('http');
 var controller = Botkit.slackbot({
   debug: false
 });
-
-var fetchJson = function (url, callback) {
-  http.get(url, function (res) {
-    var body = '';
-    res.on('data', function (chunk) { body += chunk; });
-    res.on('end', function () { callback(JSON.parse(body)); });
-  }).on('error', function (e) { console.log("Got an error: ", e); });
-};
 
 var reply = function (replyMessage, bot, message) {
   bot.reply(message, replyMessage);
@@ -53,7 +47,10 @@ controller.hears(
   'viherlatva',
   ['direct_message','direct_mention','mention'],
   function(bot, message) {
-    new Amica('7303', fetchJson, reply, bot, message);
+    const viherlatva = new Amica('7303');
+    viherlatva.todaysMenu.then(function(menuMessage) {
+      bot.reply(message, menuMessage);
+    });
   }
 );
 
