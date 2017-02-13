@@ -4,8 +4,8 @@ if (!process.env.SLACK_TOKEN) {
 }
 
 _ = require('underscore');
-var fetchJson = require('./http-helpers.js').fetchJson;
-var getJSON = require('./http-helpers.js').getJSON;
+var fetchJson = require('./http-helpers').fetchJson;
+var getJSON = require('./http-helpers').getJSON;
 
 var akava = require("./akava");
 var Leijona = require("./leijona");
