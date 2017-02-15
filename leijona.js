@@ -1,15 +1,28 @@
-var Leijona = function(restaurantId, fetchJson, reply, bot, message) {
-  this.restaurantDataUrl = 'http://ruokalistat.leijonacatering.fi/AromiStorage/blob/main/AromiMenusJsonData';
+const getJSON = require('./http-helpers').getJSON;
 
-  var restaurantFilter = function (restaurant) {
-    return restaurant.RestaurantId === restaurantId;
-  };
+class Leijona {
+  constructor(restaurantId) {
+    this.restaurantId = restaurantId;
+    this.restaurantDataUrl = 'http://ruokalistat.leijonacatering.fi/AromiStorage/blob/main/AromiMenusJsonData';
 
-  var parseRestaurantMenuUrl = function (data) {
-    return 'http:' + data.Restaurants.filter(restaurantFilter)[0].JMenus[0].LinkUrl;
-  };
+    this.todaysMenu = getJSON(this.restaurantDataUrl)
+      .then((data) => {
+        return 'http:' + data.Restaurants.filter(this.restaurantFilter, this.restaurantId)[0].JMenus[0].LinkUrl;
+      })
+      .then(getJSON)
+      .then(this.replyMessageFromMenu)
+      .catch((err) => {console.log(err)});
+  }
 
-  var replyMessageFromMenu = function (data) {
+  restaurantFilter(restaurant) {
+    return restaurant.RestaurantId === this;
+  }
+
+  parseRestaurantMenuUrl(data, restaurantId) {
+    return 'http:' + data.Restaurants.filter((restaurant) => {return restaurant.RestaurantId === restaurantId})[0].JMenus[0].LinkUrl;
+  }
+
+  replyMessageFromMenu(data) {
     var today = new Date();
     var replyMessage = '';
     try {
@@ -20,18 +33,7 @@ var Leijona = function(restaurantId, fetchJson, reply, bot, message) {
     } catch (e) {
       return 'Ei ruokaa tälle päivälle :(';
     }
-  };
-
-  var handleRestaurantMenuData = function (data) {
-    reply(replyMessageFromMenu(data), bot, message);
-  };
-
-  var handleRestaurantData = function (data) {
-    var restaurantMenuUrl = parseRestaurantMenuUrl(data);
-    fetchJson(restaurantMenuUrl, handleRestaurantMenuData);
-  };
-
-  fetchJson(this.restaurantDataUrl, handleRestaurantData);
-};
+  }
+}
 
 module.exports = Leijona;

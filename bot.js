@@ -31,7 +31,10 @@ controller.hears(
   'keltasirkku',
   ['direct_message','direct_mention','mention'],
   function (bot, message) {
-    new Leijona('4fd75ded-e510-e511-892b-78e3b50298fc', fetchJson, reply, bot, message);
+    const keltasirkku = new Leijona('4fd75ded-e510-e511-892b-78e3b50298fc');
+    keltasirkku.todaysMenu.then(function(menuMessage) {
+      bot.reply(message, menuMessage);
+    });
   }
 );
 
@@ -39,7 +42,10 @@ controller.hears(
   'asemamies',
   ['direct_message','direct_mention','mention'],
   function (bot, message) {
-    new Leijona('b9ab95ae-4834-e611-87ed-78e3b50298fc', fetchJson, reply, bot, message);
+    const asemamies = new Leijona('b9ab95ae-4834-e611-87ed-78e3b50298fc');
+    asemamies.todaysMenu.then(function(menuMessage) {
+      bot.reply(message, menuMessage);
+    });
   }
 );
 
