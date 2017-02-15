@@ -18,10 +18,6 @@ class Leijona {
     return restaurant.RestaurantId === this;
   }
 
-  parseRestaurantMenuUrl(data, restaurantId) {
-    return 'http:' + data.Restaurants.filter((restaurant) => {return restaurant.RestaurantId === restaurantId})[0].JMenus[0].LinkUrl;
-  }
-
   replyMessageFromMenu(data) {
     var today = new Date();
     var replyMessage = '';
