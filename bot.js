@@ -4,8 +4,6 @@ if (!process.env.SLACK_TOKEN) {
 }
 
 _ = require('underscore');
-var getJSON = require('./http-helpers').getJSON;
-
 var akava = require("./akava");
 var Leijona = require("./leijona");
 var Amica = require("./amica");
