@@ -1,5 +1,5 @@
-const getJSON = require('./../http-helpers').getJSON;
-const DateFormatter = require('./../date-formatter');
+const getJSON = require('./../helpers/http-helpers').getJSON;
+const DateFormatter = require('./../helpers/date-formatter');
 
 class Amica {
   constructor(restaurantPageId) {
