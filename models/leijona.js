@@ -6,12 +6,12 @@ class Leijona {
     this.restaurantDataUrl = 'http://ruokalistat.leijonacatering.fi/AromiStorage/blob/main/AromiMenusJsonData';
 
     this.todaysMenu = getJSON(this.restaurantDataUrl)
-      .then((data) => {
-        return 'http:' + data.Restaurants.filter(this.restaurantFilter, this.restaurantId)[0].JMenus[0].LinkUrl;
-      })
-      .then(getJSON)
-      .then(this.replyMessageFromMenu)
-      .catch((err) => {console.log(err)});
+    .then((data) => {
+      return 'http:' + data.Restaurants.filter(this.restaurantFilter, this.restaurantId)[0].JMenus[0].LinkUrl;
+    })
+    .then(getJSON)
+    .then(this.replyMessageFromMenu)
+    .catch((err) => {console.log(err)});
   }
 
   restaurantFilter(restaurant) {
