@@ -12,6 +12,8 @@ Deploy as Node.js application.
 
 ## Commands
 
+Example: @bot keltasirkku
+
 **keltasirkku**: Show menu for Keltasirkku
 
 **asemamies**: Show menu for Asemamies
@@ -24,7 +26,9 @@ Deploy as Node.js application.
 
 ## Acts on
 
-**joku**: Selects randomly someone from the channel and mentions her
+Example: Just say @joku
+
+**@joku**: Selects randomly someone from the channel and mentions her
 
 ## TODO
 
