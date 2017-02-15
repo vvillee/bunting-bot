@@ -16,10 +16,6 @@ var controller = Botkit.slackbot({
   debug: false
 });
 
-var reply = function (replyMessage, bot, message) {
-  bot.reply(message, replyMessage);
-};
-
 // connect the bot to a stream of messages
 controller.spawn({
   token: process.env.SLACK_TOKEN,
