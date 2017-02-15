@@ -1,4 +1,4 @@
-const getJSON = require('./http-helpers').getJSON;
+const getJSON = require('./../http-helpers').getJSON;
 
 class Leijona {
   constructor(restaurantId) {

@@ -1,5 +1,5 @@
 var fs = require("fs");
-var akava = require("../akava.js");
+var akava = require("../models/akava.js");
 var nock = require("nock");
 
 function setResult(result) {

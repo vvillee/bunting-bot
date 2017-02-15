@@ -4,10 +4,10 @@ if (!process.env.SLACK_TOKEN) {
 }
 
 _ = require('underscore');
-var akava = require("./akava");
-var Leijona = require("./leijona");
-var Amica = require("./amica");
-var Somebody = require("./somebody");
+var akava = require("./models/akava");
+var Leijona = require("./models/leijona");
+var Amica = require("./models/amica");
+var Somebody = require("./models/somebody");
 var Botkit = require('botkit');
 var http = require('http');
 var controller = Botkit.slackbot({
