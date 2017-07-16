@@ -4,7 +4,7 @@
   "description": "Bot for slack",
   "main": "bot.js",
   "engines": {
-    "node": "6.1.0"
+    "node": "6.11.1"
   },
   "scripts": {
     "test": "nodeunit test",
