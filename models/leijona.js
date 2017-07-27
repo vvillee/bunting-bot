@@ -7,7 +7,7 @@ class Leijona {
 
     this.todaysMenu = getJSON(this.restaurantDataUrl)
     .then((data) => {
-      return 'http:' + data.Restaurants.filter(this.restaurantFilter, this.restaurantId)[0].JMenus[0].LinkUrl;
+      return 'http:' + data.Restaurants.filter(this.restaurantFilter, this.restaurantId)[0].JMenus.pop().LinkUrl;
     })
     .then(getJSON)
     .then(this.replyMessageFromMenu)
