@@ -1,4 +1,4 @@
-var akava = require("./../models/akava");
+var Antell = require("./../models/antell");
 var Leijona = require("./../models/leijona");
 var Amica = require("./../models/amica");
 var Somebody = require("./../models/somebody");
@@ -67,7 +67,7 @@ controller.hears(
   'akava',
   ['direct_message','direct_mention','mention'],
   function (bot, message) {
-    akava.lunch(function (parsedResult) {
+    Antell.lunch(function (parsedResult) {
       bot.reply(message, parsedResult);
     });
   }
