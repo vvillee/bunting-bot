@@ -25,17 +25,6 @@ controller.hears(
 );
 
 controller.hears(
-  'asemamies',
-  ['direct_message','direct_mention','mention'],
-  function (bot, message) {
-    const asemamies = new Leijona('b9ab95ae-4834-e611-87ed-78e3b50298fc');
-    asemamies.todaysMenu.then(function(menuMessage) {
-      bot.reply(message, menuMessage);
-    });
-  }
-);
-
-controller.hears(
   'viherlatva',
   ['direct_message','direct_mention','mention'],
   function(bot, message) {
