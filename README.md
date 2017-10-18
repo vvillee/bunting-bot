@@ -16,8 +16,6 @@ Example: @bot keltasirkku
 
 **keltasirkku**: Show menu for Keltasirkku
 
-**asemamies**: Show menu for Asemamies
-
 **viherlatva**: Show menu for Viherlatva
 
 **akava**: Show menu for Akavatalo
