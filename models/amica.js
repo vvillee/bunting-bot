@@ -1,4 +1,5 @@
 const getJSON = require('./../helpers/http-helpers').getJSON;
+
 const DateFormatter = require('./../helpers/date-formatter');
 
 class Amica {
@@ -12,15 +13,16 @@ class Amica {
 
   generateReplyMessageFromLunches(lunches) {
     var replyMessage = '';
-    _.each(lunches, function (lunch) { replyMessage = replyMessage + lunch + '\n'})
+    _.each(lunches, function (lunch) { replyMessage = replyMessage + lunch + '\n'; });
     return replyMessage;
   }
 
   handleRestaurantData(data) {
-    const lunchMeals = _.find(data.LunchMenu.SetMenus, function(menu) { return menu.Name === 'Buffetlounas' });
-    const lunches = _.map(lunchMeals.Meals, function(lunch) { return lunch.Name });
+    const lunchMeals = _.find(data.LunchMenu.SetMenus, function(menu) { return menu.Name === 'Buffetlounas'; });
+    const lunches = _.map(lunchMeals.Meals, function(lunch) { return lunch.Name; });
     return this.generateReplyMessageFromLunches(lunches);
   }
-};
+
+}
 
 module.exports = Amica;

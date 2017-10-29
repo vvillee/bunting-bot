@@ -11,7 +11,7 @@ class Leijona {
     })
     .then(getJSON)
     .then(this.replyMessageFromMenu)
-    .catch((err) => {console.log(err)});
+    .catch((err) => { console.log(err); });
   }
 
   restaurantFilter(restaurant) {
