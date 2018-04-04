@@ -1,9 +1,9 @@
-var http = require('http');
+var https = require('https');
 var cheerio = require('cheerio');
 var miss = require('mississippi');
 var antell = {};
 var restaurantId = 268;
-var antellUrl = "http://www.antell.fi/lounaslistat/lounaslista.html?owner=" + restaurantId;
+var antellUrl = "https://www.antell.fi/lounaslistat/lounaslista.html?owner=" + restaurantId;
 var weekdayIndexHashMap = {
   0: 6, 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5
 };
@@ -24,7 +24,7 @@ antell.parseDay = function(callback, finder) {
 };
 
 antell.parseRaw = function (callback) {
-  http.get(antellUrl, function (incomingMessage) {
+  https.get(antellUrl, function (incomingMessage) {
     var streamHandler = miss.concat(function (buffer) {
       return callback(buffer.toString("utf8"));
     });

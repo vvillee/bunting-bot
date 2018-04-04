@@ -3,7 +3,7 @@ var antell = require("../models/antell.js");
 var nock = require("nock");
 
 function setResult(result) {
-	return nock("http://www.antell.fi").
+	return nock("https://www.antell.fi").
 		filteringPath(function (path) {
 			return "/all";
 		}).
