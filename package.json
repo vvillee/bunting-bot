@@ -4,7 +4,7 @@
   "description": "Bot for slack",
   "main": "bot.js",
   "engines": {
-    "node": "8.9.4"
+    "node": "10.15.0"
   },
   "scripts": {
     "test": "nodeunit test",
@@ -13,13 +13,13 @@
   "author": "Ville Pulkkinen",
   "license": "ISC",
   "dependencies": {
-    "botkit": "^0.6.0",
-    "cheerio": "~0.22.0",
-    "mississippi": "~1.3.0",
-    "underscore": "~1.8.3"
+    "botkit": "^0.7.0",
+    "cheerio": "^0.22.0",
+    "mississippi": "^3.0.0",
+    "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "nock": "^9.0.28",
-    "nodeunit": "^0.11.2"
+    "nock": "^10.0.6",
+    "nodeunit": "^0.11.3"
   }
 }
